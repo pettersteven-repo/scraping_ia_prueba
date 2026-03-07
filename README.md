@@ -31,6 +31,7 @@ web-scraping-project
 │   │
 │   └── utils              # Funciones auxiliares
 │       └── helpers.py
+│       └── logger.py      # Manejo de Logs
 │
 ├── config                 # Archivos de configuración
 │
@@ -41,4 +42,22 @@ web-scraping-project
 ├── README.md              # Documentación del proyecto
 │
 └── main.py                # Script principal de ejecución
+```
+
+## Instalación
+Clonar proyecto desde GitHub
+``` 
+https://github.com/pettersteven-repo/scraping_ia_prueba.git
+```
+Instalacón del entorno virtual
+```
+python -m venv venv
+```
+Activar entorno virtual requerimeintos
+```
+source venv/Scripts/activate
+```
+Instalar dependecias 
+```
+pip install -r requirements.txt
 ```
