@@ -1,6 +1,6 @@
 # Scraping IA
 
-Este proyecto tiene como la presentación del proceso de selección a la vacante ______ Python. El proyecto se centra el la extracción, procesamiento y análisis de datos, haciendo uso de Web-Scraping e inteligencia artificial local. 
+Proyecto desarrollado como prueba tecnica a la presentación del proceso de selección a la vacante Analista III (Python). El proyecto se centra el la extracción, procesamiento y análisis de datos, haciendo uso de Web-Scraping e inteligencia artificial local. 
 
 ## Tecnologías Utilizadas
 

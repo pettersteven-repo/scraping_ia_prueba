@@ -1,7 +1,7 @@
 import logging
 
 def setup_logger():
-    logger = logging.getLogger("scraper")
+    logger = logging.getLogger("logs")
     logger.setLevel(logging.INFO)
 
     formatter = logging.Formatter(
@@ -20,3 +20,8 @@ def setup_logger():
     return logger
 
 logger = setup_logger()
+
+if __name__ == "__main__":
+    logger.info("Logger cargado correctamente.")
+    logger.error("Logger Error.")
+    logger.warning("Este es un mensaje de advertencia para propósitos de prueba.")

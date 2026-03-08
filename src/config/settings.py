@@ -5,5 +5,4 @@ load_dotenv()
 
 # Leer varianles de entorno
 PAGINA = os.getenv('pagina')
-
-
+PAGINA_TEST = PAGINA + os.getenv('end_point')
