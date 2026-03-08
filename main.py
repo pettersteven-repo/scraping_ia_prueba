@@ -1,14 +1,23 @@
 from src.utils.logger import logger
-from src.scrapers.scraper import response
-from bs4 import BeautifulSoup
+from src.utils.helpers import obtener_html, extraer_hipervinculos
+from src.scrapers.scraper import hipervinculos_primer_nivel
+from src.config.settings import PAGINA
 
-soup = BeautifulSoup(response.content, "html.parser")
+print(hipervinculos_primer_nivel)
 
-links = soup.find_all("a")
-hipervinculos =[]
-for link in links:
-    if link.get("href") is not None and "e-commerce" in link.get("href"):
-        hipervinculos.append(link.get("href"))
+hipervinculos_segundo_nivel = []
+hipervinculos_tercer_nivel = []
+logger.info("INICIA SEGUNDO NIIVEL __________________________________________________________________")
+for hiper in [hipervinculos_primer_nivel[0]]:
+    url = PAGINA + hiper
+    html = obtener_html(url=url)
+    lista = extraer_hipervinculos(html=html)
+    hipervinculos_segundo_nivel.append(lista)
+for hiper in hipervinculos_segundo_nivel:
+    for hiper_2 in hiper:
+        url_2 = PAGINA + hiper_2
+        html_2 = obtener_html(url=url_2)
+        lista_2 = extraer_hipervinculos(html=html_2)
+        hipervinculos_tercer_nivel.append(lista_2)
 
-
-print(hipervinculos)
+print(hipervinculos_tercer_nivel)
