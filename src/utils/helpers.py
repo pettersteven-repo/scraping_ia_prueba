@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 
 #__________________________________________________________________________________#
+# Función para scraper
 def obtener_html(url):
     try:
         html= requests.get(url)
@@ -18,7 +19,8 @@ def obtener_html(url):
     except BaseException as e:
         logger.error(f"La pagina {url} no existe {e}")
         raise ValueError (f"La pagina {url} no existe {e}")
-#__________________________________________________________________________________#    
+#__________________________________________________________________________________# 
+# Funcipon de ubicación hipervinculos   
 def extraer_hipervinculos(html):
     try:    
         soup = BeautifulSoup(html, "html.parser")
@@ -26,16 +28,16 @@ def extraer_hipervinculos(html):
         hipervinculos =[]
         logger.info("Se carga el codigo html y etiquetas de hipervinculo")
         for link in links:
-            logger.info( f"Hipervinculo {link.get("href")} a la lista")
+            #logger.info( f"Hipervinculo {link.get("href")} a la lista")
             if link.get("href") is not None and "e-commerce" in link.get("href"):
                 hipervinculos.append(link.get("href"))    
-        logger.info(f"Estos son los hipervinculos {hipervinculos}")
+        logger.info(f"Estos son los hipervinculos ESTAN EN LA LISTA")
         return hipervinculos
     except BaseException as e:
         logger.error(f"Fallo al extraer hipervinculos {e}")
         raise ValueError(f"Fallo al extraer hipervinculos {e}")
 #__________________________________________________________________________________#
-#     
+# función ubicación hipervinculos    
 def extraer_hipervinculos_categoria(lista):
     try:
         hipervinculos_segundo_nivel = []
@@ -57,8 +59,8 @@ def extraer_hipervinculos_categoria(lista):
                 html_1 = obtener_html(url=url_1)
                 #categorias = []
                 for link_1 in extraer_hipervinculos(html_1):
-                    print(extraer_hipervinculos(html_1))
-                    print(link_1)
+                    #print(extraer_hipervinculos(html_1))
+                    #print(link_1)
                     if link_1 is not None and ("laptops"in link_1 or "tablets" in link_1):
                         hipervinculos_tercer_nivel.append(link_1)
                     if link_1 is not None and "touch" in link_1:
@@ -69,3 +71,13 @@ def extraer_hipervinculos_categoria(lista):
     except BaseException as e:
         logger.error(f"Fallo al extraer hipervinculos de categorias {e}")
         raise ValueError(f"Fallo al extraer hipervinculos de categorias {e}")
+#__________________________________________________________________________________#
+# Selección de paginas a scrapear  
+def seleccionar_pagina_scraping(e_commerce, categoria, tipo_categoria, lista):
+    try:
+        for link in lista:
+            if e_commerce in link and categoria in link and tipo_categoria in link:
+                return link
+    except BaseException as e:
+        logger.error("No se logra extraer el hipervinculo")
+        raise ValueError("No se logra extraer el hipervinculo")
