@@ -1,3 +1,4 @@
+import pandas as pd
 from bs4 import BeautifulSoup
 from src.config.settings import PAGINA
 from src.utils.logger import logger
@@ -37,3 +38,31 @@ def extraer_data_allinon(url_scraping):
     except BaseException as e:
         logger.error("No se pudo obtener la información")
         raise("No se pudo obtener la información")
+    
+def extraer_data_static(url_scraping,numero_paginas):
+    url_page = "?page="
+    try:
+        data_static = []
+        for i in range(numero_paginas):
+            url_page_numero = url_scraping + url_page + str(i+1)
+            data_page = extraer_data_allinon(url_page_numero)
+            data_static.extend(data_page)
+        logger.info(f"Se extrae información de las {numero_paginas} paginas")
+        return data_static
+    except BaseException as e:
+        logger.error("No se pudo extraer los datos de static")
+        raise("No se pudo extraer los datos de static")    
+    
+
+def guardar_cvs(e_commerce, categoria, tipo_categoria, numero_paginas, data):
+    try:
+        datos = pd.DataFrame(data)
+        if numero_paginas == 1:
+            nombre_archivo = f"data/{e_commerce}_{categoria}_{tipo_categoria}.csv"
+        else:
+            nombre_archivo = f"data/{e_commerce}_{categoria}_{tipo_categoria}_pag{numero_paginas}.csv"
+        datos.to_csv(nombre_archivo, encoding="utf-8")
+        logger.info(f"Datos guardados en CSV: {nombre_archivo}")
+    except Exception as e:
+        logger.error("No se guardó el CSV")
+        raise Exception("No se guardó el CSV") from e
