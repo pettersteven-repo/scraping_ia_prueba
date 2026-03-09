@@ -1,3 +1,4 @@
+import ollama
 import pandas as pd
 from src.utils.logger import logger
 
@@ -44,3 +45,47 @@ def generar_resumen(dataframe):
     except BaseException as e:
         logger.error("No se genera resumen")
         raise("No se genera resumen")
+
+def crear_prompt_resumen(contexto):
+    try:
+        prompt = f"""
+        Analiza el siguiente dataset de productos de e-commerce.
+
+        {contexto}
+
+        Resume los resultados obtenidos.
+        """
+        logger.info("Se crea Prompt")
+        return prompt
+    except BaseException as e:
+        logger.error("no se puede crear Prompt")
+
+def crear_prompt_anomalias(contexto):
+    prompt = f"""
+    Analiza los datos del dataset.
+
+    {contexto}
+
+    Identifica posibles anomalías en precios o ratings.
+    """
+    return prompt
+
+def consultar_modelo(prompt):
+
+    respuesta = ollama.chat(
+        model="llama3",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return respuesta["message"]["content"]
+
+def guardar_analisis(resumen, anomalias):
+
+    with open("output/ai_summary.md", "w", encoding="utf-8") as f:
+
+        f.write("# Análisis del Dataset\n\n")
+
+        f.write("## Resumen\n")
+        f.write(resumen)
+
+        f.write("\n\n## Anomalías detectadas\n")
+        f.write(anomalias)

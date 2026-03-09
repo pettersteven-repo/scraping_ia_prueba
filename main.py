@@ -2,9 +2,10 @@ from src.utils.logger import logger #
 from src.utils.helpers import seleccionar_pagina_scraping
 from src.scrapers.scraper import lista_hipervinculos_interes
 from src.parsers.parsers import extraer_data_allinon, extraer_data_static, guardar_cvs
-from src.pipelines.ia_analisis import cargar_datos, limpiar_dataframe, generar_resumen
+from src.pipelines.ia_analisis import cargar_datos, limpiar_dataframe, generar_resumen, crear_prompt_resumen,crear_prompt_anomalias,consultar_modelo, guardar_analisis
 
 import pandas as pd
+import ollama
 #############################################################################################
 # Variables prueba
 
@@ -78,7 +79,12 @@ guardar_cvs(e_commerce,categoria,tipo_categoria,numero_paginas,data)
 
 dataframe = cargar_datos(e_commerce, categoria, tipo_categoria, numero_paginas)
 dataframe = limpiar_dataframe(dataframe)
+contexto = generar_resumen(dataframe)
 
-resumen = generar_resumen(dataframe)
+prompt1 = crear_prompt_resumen(contexto)
+prompt2 = crear_prompt_anomalias(contexto)
 
-print(resumen)
+respuesta_resumen = consultar_modelo(prompt1)
+respuesta_anomalias = consultar_modelo(prompt2)
+
+guardar_analisis(respuesta_resumen,respuesta_anomalias)
