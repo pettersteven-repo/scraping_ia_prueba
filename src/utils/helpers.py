@@ -72,7 +72,7 @@ def extraer_hipervinculos_categoria(lista):
         logger.error(f"Fallo al extraer hipervinculos de categorias {e}")
         raise ValueError(f"Fallo al extraer hipervinculos de categorias {e}")
 #__________________________________________________________________________________#
-# Selección de paginas a scrapear  
+# Selección de hipervinculo a scrapear  
 def seleccionar_pagina_scraping(e_commerce, categoria, tipo_categoria, lista):
     try:
         for link in lista:
