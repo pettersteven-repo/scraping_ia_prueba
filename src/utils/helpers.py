@@ -1,4 +1,5 @@
 # Scrip para los metodos usados. 
+import sys
 from src.config.settings import PAGINA
 from src.utils.logger import logger
 from bs4 import BeautifulSoup
@@ -81,3 +82,14 @@ def seleccionar_pagina_scraping(e_commerce, categoria, tipo_categoria, lista):
     except BaseException as e:
         logger.error("No se logra extraer el hipervinculo")
         raise ValueError("No se logra extraer el hipervinculo")
+#__________________________________________________________________________________#
+# Selección de hipervinculo a scrapear     
+
+def pausa_usuario():
+    opcion = input("\nScraping terminado. ¿Desea iniciar el análisis? (s/n): ").strip().lower()
+
+    if opcion == "s":
+        return True
+    else:
+        print("Programa detenido por el usuario.")
+        sys.exit()
