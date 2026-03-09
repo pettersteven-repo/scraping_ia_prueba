@@ -60,8 +60,8 @@ def guardar_cvs(e_commerce, categoria, tipo_categoria, numero_paginas, data):
         if numero_paginas == 1:
             nombre_archivo = f"data/{e_commerce}_{categoria}_{tipo_categoria}.csv"
         else:
-            nombre_archivo = f"data/{e_commerce}_{categoria}_{tipo_categoria}_pag{numero_paginas}.csv"
-        datos.to_csv(nombre_archivo, encoding="utf-8")
+            nombre_archivo = f"data/{e_commerce}_{categoria}_{tipo_categoria}_{numero_paginas}pag.csv"
+        datos.to_csv(nombre_archivo, encoding="utf-8", index=False)
         logger.info(f"Datos guardados en CSV: {nombre_archivo}")
     except Exception as e:
         logger.error("No se guardó el CSV")
