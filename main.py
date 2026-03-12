@@ -5,7 +5,9 @@ from src.parsers.parsers import extraer_data_allinon, extraer_data_static, guard
 from src.pipelines.ia_analisis import cargar_datos, limpiar_dataframe, generar_resumen, crear_prompt_resumen,crear_prompt_anomalias,consultar_modelo, guardar_analisis
 
 import pandas as pd
-#############################################################################################
+###########################################################################
+# 
+# ##################
 # Variables prueba
 
 # e_commerce = "static" 
@@ -90,3 +92,4 @@ respuesta_resumen = consultar_modelo(prompt1)
 respuesta_anomalias = consultar_modelo(prompt2)
 
 guardar_analisis(respuesta_resumen,respuesta_anomalias)
+
