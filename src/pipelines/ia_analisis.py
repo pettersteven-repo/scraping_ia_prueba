@@ -53,7 +53,9 @@ def crear_prompt_resumen(contexto):
 
         {contexto}
 
-        Resume los resultados obtenidos.
+        Resume los resultados obtenidos. 
+
+        Actúa como un experto en análisis de datos, y presenta los resultados en español.
         """
         logger.info("Se crea Prompt")
         return prompt
@@ -67,20 +69,21 @@ def crear_prompt_anomalias(contexto):
     {contexto}
 
     Identifica posibles anomalías en precios o ratings.
+    Actúa como un experto en análisis de datos, y presenta los resultados en español.
     """
     return prompt
 
 def consultar_modelo(prompt):
 
     respuesta = ollama.chat(
-        model="llama3",
+        model="gemma:2b",
         messages=[{"role": "user", "content": prompt}]
     )
     return respuesta["message"]["content"]
 
-def guardar_analisis(resumen, anomalias):
+def guardar_analisis(resumen, anomalias, e_commerce,  categoria, tipo_categoria, numero_paginas):
 
-    with open("output/ai_summary.md", "w", encoding="utf-8") as f:
+    with open(f"output/ai_summary_{e_commerce}_{categoria}_{tipo_categoria}_{numero_paginas}pag.md", "w", encoding="utf-8") as f:
 
         f.write("# Análisis del Dataset\n\n")
 
